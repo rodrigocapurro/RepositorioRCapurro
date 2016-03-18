@@ -2,48 +2,137 @@
 <html>
 <head>
 	<title></title>
+	<!--Scripts-->
+	<script src="Scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="Scripts/Bootstraps/bootstrap.js" type="text/javascript"></script>
+    <script src="Scripts/Bootstraps/bootstrap.min.js" type="text/javascript"></script>
+    <script src="Controlador.js" type="text/javascript"></script>
+    
+    <!--Estilos-->
+	<link rel="stylesheet" type="text/css" href="Estilos/EstilosTextos.css">
+	<link href="Estilos/Bootstraps/bootstrap.css" rel="stylesheet" media="screen" />
+    <link href="Estilos/Bootstraps/bootstrap.min.css" rel="stylesheet" media="screen" />
+
+	<script type="text/javascript">
+		var idControlGlobal = '';
+		$(document).ready(function(){
+
+			//valida la edad al cambiar su valor
+            $('#Edad').change(function () {
+            	if( $('#Edad').val()<0){
+            		 $('#Edad').val(0);
+            	}
+            	else if( $('#Edad').val()>102){
+            		  $("#message-text").html("La edad que intenta ingresar es invalida, debe ser menor o igual 102");
+                        $("#message-modal").modal('show');
+                        $('#Edad').val(102);
+            	}
+            });
+
+             $("#searchFile").change(function (e) {
+
+                var file = e.target.files[0];
+
+                if (file != null) {
+
+                    var extension = file.name.substring(file.name.length - 4, file.name.length);
+
+                    if (!((extension == ".jpg") || (extension == ".png") ||
+                        (extension == ".jpeg") || (extension == ".bmp"))) {
+                        $("#message-text").html("El archivo debe ser jpg, png, jpeg o bmp");
+                        $("#message-modal").modal('show');
+                        return false;
+                    }
+
+                    var reader = new FileReader();
+                    if (reader != null) {
+                        reader.onloadend = function () {
+                            var img = document.getElementById(idControlGlobal);
+                            img.src = reader.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                    else { img.src = "No se puede mostrar la imagen"; }
+
+                }
+                else {
+                    $("#error-text").html("No se puede mostrar la imagen");
+                    $("#error-modal").modal('show');
+                }
+
+            });
+		})
+	</script>
 </head>
 <body>
  
-<link rel="stylesheet" type="text/css" href="EstilosTextos.css">
+    <!--Cuadro de dialogo modal-->
+    <div class="modal" id="message-modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="float:inherit;">
+                        <p id="message-text"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" autofocus class="btn btn-danger" id="button-close" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<h1 id="titulo"  align="center" >Ingrese sus datos personales</h1>
-	<fieldset style="left:350px; width:600px; position:relative">
+	<br>
+	<hr>
+	<fieldset style="left:350px; width:700px; position:relative">
 	<legend> Datos del usuario</legend>
 	<div style="top:10px;left:20px; position:relative" >
 		<div>
 			<label>Nombre:
-				<input class="ubicControles" id="txtNombre" type="text" />
+				<input style="top:0px;" class="ubicControles" id="txtNombre" type="text" />
 			 </label>
 		 </div>
 		 <br>
 		 <div>
 		 	<label>Correo Electronico: 
-				<input class="ubicControles" id="txtMail" type="Mail" />
+				<input  style="top:45px;" class="ubicControles" id="txtMail" type="Mail" />
 		 	</label>
 		 </div>
 		  <br>
 		 <div>
 		 	<label>Contrase&ntildea: 
-				<input class="ubicControles" id="txtContra" type="Password" />
+				<input style="top:90px;" class="ubicControles" id="txtContra" type="Password" />
 		 	</label>
 		 </div>
 		  <br>
 		 <div>
 		 	<label>Confirme contrase&ntildea: 
-				<input class="ubicControles" id="txtConfirmContra" type="Password" />
+				<input style="top:135px;" class="ubicControles" id="txtConfirmContra" type="Password" />
 		 	</label>
 		 </div>
 		 <br>
 		 <DIV>
 		 	<label>Pais:
-				<select  class="ubicControles">
+				<select style="top:180px;" class="ubicControles">
 					<option value="Arg" selected>Argentina</option> 
   					<option value="Bra" >Brasil</option>
   					<option value="Chi">Chile</option>
 				</select>
 		 	</label>
 		 </DIV>
-		 <div style="bottom:170px;left:380px; position:relative">
+		 <br>
+		 <div>
+		 	<label>Domicilio:
+		 		<textarea class="ubicControles" style="resize:none; height: 100px; top: 225px; width: 170px;" id="domicilio" ></textarea>
+		 	</label>
+		 </div>
+		 <div style="bottom:250px;left:380px; position:relative">
 			 <div>
 				 <label>Trabaja?
 				 	<input id="chkTrabaja" type="checkbox" />
@@ -51,16 +140,34 @@
 			 </div>
 			 <div>
 			 <br>
-			 	<fieldset style="width:100px;">
+			 	<fieldset style="width:130px;">
 			 		<legend>Estado Civil</legend>
 				 	<input type="radio" name="EstadoCivil" value="Soltero" checked> Soltero<br>
 	  				<input type="radio" name="EstadoCivil" value="Casado"> Casado<br>
-	  				<input type="radio" name="EstadoCivil" value="Divorciado"> Divorciado
-	  				<input type="radio" name="EstadoCivil" value="Otro"> Otro
+	  				<input type="radio" name="EstadoCivil" value="Divorciado"> Divorciado<br>
+	  				<input type="radio" name="EstadoCivil" value="Otro"> Otro<br>
 			 	</fieldset>
 			 </div>
+			 <br>
+			 <div>
+			 	<label>Fecha de Nacimiento:
+			 		<input style="top:205px;" class="ubicControles" id="fechaNac" type="date"></input>
+			 	</label>
+			 </div>
+			 <br>
+			 <div>
+			 	<label>Edad:
+			 		<input class="ubicControles" type="Number" id="Edad" style="top:250px;width: 70px;"></input>
+			 	</label>
+			 </div>
 		 </div>
+		 <div style="bottom:550px;left:700px; position:relative">
+		 	<div>
+		 		<input type="file" style="visibility:hidden" id="searchFile" name="searchFile" />
+		 		<input title="Click para seleccionar foto" width="100" height="100" type="image" onmousedown='quitarFoto("imagen", event)' src="Imagenes/ingresarfoto.jpg" id="imagen" name="imagen" onclick='buscarFoto("imagen", event)' />
 
+		 	</div>
+		 </div>
 	 </div>
 	 </fieldset>
 </body>
