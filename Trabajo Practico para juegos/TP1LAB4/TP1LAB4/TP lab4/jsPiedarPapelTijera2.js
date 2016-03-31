@@ -32,6 +32,7 @@ function piedra()
 	}
 
 	mostarResultado();
+	comenzar();
 }//FIN DE LA FUNCIÓN
 function papel()
 {
@@ -49,6 +50,7 @@ if(eleccionMaquina == 1 ){
 	}
 
 	mostarResultado();
+	comenzar();
 }//FIN DE LA FUNCIÓN
 function tijera()
 {
@@ -67,6 +69,7 @@ function tijera()
 	}
 
 	mostarResultado();
+	comenzar();
 }//FIN DE LA FUNCIÓN
 
 function mostrarMensaje(mensaje){

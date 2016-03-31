@@ -35,6 +35,7 @@ function verificar()
 
 	if(numeroActual< 1 || numeroActual >100){
 		mostrarMensaje("El numero ingresado debe estar entre 1 y 100");
+		return;
 	}
 
 	if(contadorIntentos == 0){

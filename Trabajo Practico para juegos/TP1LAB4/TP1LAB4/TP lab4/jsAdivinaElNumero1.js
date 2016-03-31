@@ -33,6 +33,7 @@ function verificar()
 
 	if(numeroActual< 1 || numeroActual >100){
 		mostrarMensjae("El numero ingresado debe estar entre 1 y 100");
+		return;
 	}
 	if(numeroSecreto == numeroActual){
 

@@ -11,18 +11,27 @@
 
 		<!--Lógica-Programación-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-		<script type="text/javascript" src="jsPiedarPapelTijera2.js"></script>
+		<!--<script type="text/javascript" src="jsPiedarPapelTijera2.js"></script>-->
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
         <!--Final de Lógica-Programación -->
 		
 
 		</head>
-	<body onload="comenzar()">
+	<!--<body onload="comenzar()">-->
+	<body ng-app="MiApp" ng-init="ganadas='gano'; perdidas=0" ng-controller="contPPT2">
 		<div class="CajaUno animated bounceInDown">
 			
 
-			<input type="text" readonly id="ganadas">
-			<input type="text" readonly id="perdidas">
-			<input type="text" readonly id="empatadas">
+			<input type="text" readonly ng-model="ganadas">
+			<input type="text" readonly ng-model="perdidas">
+			<input type="text" readonly ng-model="empatadas">
+			<input type="text" ng-model="MiText">
+		
+			<p ng-bind="MiText">
+				
+			</p>
+
 			<form id="FormIngreso">
 				<center>
 					<img src="imagenes/interrogacion.jpg" >
@@ -36,9 +45,9 @@
 
 			
 			
-			<img class="PiedraPapelTijera animated zoomInRight " src="imagenes/piedra.jpg" onclick="piedra()">
-			<img class="PiedraPapelTijera animated zoomInUp" src="imagenes/papel.jpg" onclick="papel()">
-			<img class="PiedraPapelTijera animated zoomInLeft"  src="imagenes/tijera.jpg" onclick="tijera()">
+			<img class="PiedraPapelTijera animated zoomInRight " src="imagenes/piedra.jpg" ng-click="piedra()">
+			<img class="PiedraPapelTijera animated zoomInUp" src="imagenes/papel.jpg" ng-click="papel()">
+			<img class="PiedraPapelTijera animated zoomInLeft"  src="imagenes/tijera.jpg" ng-click="perdidas = perdidas + 1">
 			
 
 			
@@ -61,5 +70,6 @@
 		<div class="CajaAbajo animated bounceInUp">
 			<a style=" margin-top: -10%;" class="MiBotonUTNLinea" onclick="location.href='index.html'" >Men&uacute; ejercicios</a>	
 		</div>
+
 	</body>
 </html>
